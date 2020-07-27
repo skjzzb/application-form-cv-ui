@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/nebular-form",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}

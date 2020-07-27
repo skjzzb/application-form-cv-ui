@@ -1,0 +1,69 @@
+nb-checkbox {
+    margin-bottom: 1rem;
+  }
+  
+  .form-inline [fullWidth] {
+    flex: 1;
+  }
+  
+  .form-inline > * {
+    margin: 0 1.5rem 1.5rem 0;
+  }
+  
+  .icon-container {
+    margin-bottom: 20px;
+    padding: 7px 0;
+    font-size: 24px;
+  }
+  
+  /* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+   nb-card-body{
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  nb-card.inline-form-card nb-card-body {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+  .row {
+    margin-left: -10px;
+    margin-right: -10px;
+  }
+  nb-select.size-medium button {
+    padding: 0.4375rem 2.2rem 0.4375rem 1.125rem !important;
+
+    nb-icon {
+      right: 0.41rem !important;
+    }
+  }
+  .demo-items {
+    flex: 1 0 33%;
+  }
+  nb-progress-bar ~ nb-progress-bar {
+    margin-top: 1rem;
+  }
+
+lable.style{
+    font-size: larger;
+  }
+
+.mylable{
+  font-size: medium; 
+  font-family: 'Times New Roman', Times, serif;
+}

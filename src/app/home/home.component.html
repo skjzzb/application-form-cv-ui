@@ -1,0 +1,219 @@
+<div class="col-md-12">
+    <nb-card status="info">
+      <nb-card-header><h3 style="color: floralwhite;">Application Form</h3></nb-card-header>
+      <nb-card-body>
+        <div class="row">
+          <div class="col-md-12">
+            <form  #myForm="ngForm" (ngSubmit)="apply(myForm)" role="form" novalidate>
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="First Name" class="label" style="font-size: medium;">
+                    <nb-icon icon="person-outline" status="info" style="size: 5px;"></nb-icon>
+                    First Name
+                  <span style="color: red; font-size: small;" fixed>*</span>
+                  </label>
+                  <input type="text"
+                        id="firstName"
+                        name="firstName" 
+                        [(ngModel)]="model.firstName" 
+                        nbInput 
+                        fullWidth
+                        #firstName="ngModel"
+                        placeholder="First Name"
+                        class="form-control"
+                        [class.is-invalid]="firstName.invalid && firstName.touched" 
+                        required
+                        >
+                    <div *ngIf=" firstName.invalid && (firstName.dirty || firstName.touched)" 
+                         class="invalid-feedback" style="height: 30px; padding-top: 3px; padding-left: 5px; margin-top: 3px;">
+                         <span class="text-danger" *ngIf="firstName.errors.required">This field is required</span>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="Last Name" class="label" style="font-size: medium;">
+                      Last Name
+                      <span style="color: red; font-size: small;" fixed>*</span>
+                    </label>
+                  <input type="text" 
+                        id="lastName"
+                        name="lastName" 
+                        [(ngModel)] ="model.lastName"  
+                        nbInput 
+                        fullWidth 
+                        required  
+                        placeholder="Last Name"
+                        class="form-control"
+                        [class.is-invalid]="lastName.invalid && lastName.touched"
+                        #lastName = "ngModel"
+                        >
+                    <div *ngIf=" lastName.invalid && (lastName.dirty || lastName.touched)"
+                      class="invalid-feedback" style="height: 30px; padding-top: 3px; padding-left: 5px; margin-top: 3px;">
+                       
+                    <span class="text-danger" *ngIf="lastName.errors.required">This field is required</span>
+                 </div>
+                </div>
+              </div>
+
+              <br>
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="Email" class="label" style="font-size: medium;">
+                    <nb-icon icon="email-outline" status="info" style="size: 5px;"></nb-icon>
+                    Email
+                    <span style="color: red; font-size: small;" fixed>*</span>
+                  </label>
+                  <input type="email"
+                         id="email" 
+                         name="email"
+                         [(ngModel)]="model.email"
+                         nbInput 
+                         fullWidth  
+                         #email = "ngModel"
+                         required
+                         pattern ="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                         placeholder="Email"
+                         [class.is-invalid]="email.invalid && email.touched" 
+                         class="form-control"> 
+                  
+                  <div *ngIf=" email.invalid && (email.dirty || email.touched)"
+                         class="invalid-feedback" style="height: 30px; padding-top: 3px; padding-left: 5px; margin-top: 3px;">
+                     
+                         <span class="text-danger" *ngIf="email.errors.required">Primary email is required</span>
+                         <span class="text-danger" *ngIf="email.errors.pattern">Please provide a valid email format-"xxx@example.com"</span>
+                     <!-- <div *ngIf=" lastName.errors.required">
+                      Email is required.
+                     </div>  
+                     <div *ngIf=" lastName.errors.email">
+                      Email is required.
+                     </div>   -->
+                 </div>
+                </div>
+  
+                <div class="col-md-6">
+                  <label for="mobile" class="label" style="font-size: medium;">
+                    <nb-icon icon="phone-call-outline" status="info" style="size: 5px;"></nb-icon>
+                    Contact
+                  </label>
+                  <input type="number" 
+                         id="mobile"
+                         name="mobile" 
+                         [(ngModel)] = "model.mobile"
+                         #mobile = "ngModel"
+                         nbInput 
+                         fullWidth 
+                         placeholder="Mobile"  
+                         maxlength="10"
+                         [class.is-invalid]="mobile.invalid && mobile.touched"
+                         class="form-control" > 
+                  <div *ngIf=" mobile.invalid && (mobile.dirty || mobile.touched)"
+                    class="invalid-feedback" style="height: 30px; padding-top: 3px; padding-left: 5px; margin-top: 3px;">
+                  
+                  <span class="text-danger" *ngIf="mobile.errors.maxlength">maximum length is 10</span>
+                    </div>
+                </div>
+                </div>
+              <br>
+              <div class="row">
+                <div class="col-md-6">
+                  <label for="Select Position" class="label" style="font-size: medium;">
+                    <nb-icon icon="briefcase-outline" status="info" style="size: 5px;"></nb-icon>
+                    What position are you applying for?
+                    <span style="color: red; font-size: small;" fixed>*</span>
+                  </label>
+                  <nb-select placeholder="Select Position" fullWidth [(selected)]="selectedItem" >
+                    <nb-option *ngFor="let d of filtered" (click)="onSelect(d.id)" value="{{d.id}}">{{d.value}}</nb-option>
+                  </nb-select>  
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="Short Summary" class="label" style="font-size: medium;">
+                    <nb-icon icon="award-outline" status="info" style="size: 5px;"></nb-icon>
+                    Required Skills
+                  </label>
+                  <textarea [(ngModel)]="job_desc" [ngModelOptions]="{standalone: true}"  nbInput fullWidth  placeholder="first select Position" readonly ></textarea>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="Required Skill" class="label" style="font-size: medium;">
+                    <nb-icon icon="book-open-outline" status="info" style="size: 5px;"></nb-icon>
+                    Job Description
+                  </label>
+                  <textarea [(ngModel)]="job_summury" nbInput id="shortSummary" [ngModelOptions]="{standalone: true}" fullWidth placeholder="Short Summary" readonly></textarea>
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <div class="col-md-12">
+                  <label for="resume" class="label" style="font-size: medium;">
+                    <nb-icon icon="cloud-upload-outline" status="info" style="size: 5px;"></nb-icon>
+                    Upload your Resume here->
+                  </label>
+                  <br>
+                  <br>
+                  <input type="file" id="fileUpload" #fileUpload name="fileUpload" accept="{{accept}}" multiple="multiple"/>
+                <!-- <button type = "button" nbButton status="primary" (click)="onClick()">
+                    {{text}}  
+                  </button> -->
+                </div>
+              </div>
+              <br>
+              <div class="row">
+                <!-- <input type="file" id="fileUpload" name="fileUpload" multiple="multiple" 
+                accept="{{accept}}"/> -->
+                <!-- style="display:none;" -->
+                <!-- <div class="col-md-6" ngIf="flag">
+                <nb-progress-bar [value]="file.progress" status="success">success</nb-progress-bar>
+               </div> -->
+              </div>
+            
+              <br>
+              <div class="col-md-6">
+                <label for="Sub-Technology" class="label" style="font-size: medium;">
+                  <nb-icon icon="checkmark-square-outline" status="info" style="size: 5px;"></nb-icon>
+                  What is your current employment status?
+                  <span style="color: red; font-size: small;" fixed>*</span>
+                </label>
+                <div class="demo-items">
+                  <nb-radio-group [(value)]="radioGroupValue">
+                    <nb-radio
+                      [value]="'Employed'">
+                      Employed
+                    </nb-radio>
+                    <nb-radio
+                      [value]="'Self-Employed'">
+                      Self-Employed
+                    </nb-radio>
+                    <nb-radio
+                      [value]="'Unemployed'">
+                      Unemployed
+                    </nb-radio>
+                    <nb-radio
+                      [value]="'Student'">
+                      Student
+                    </nb-radio>
+                  </nb-radio-group>
+                </div>
+              </div>
+              <br>
+              <div class="col-md-12">
+                <div class="row action-btn">
+                  <button type="submit" nbButton status="danger"  [disabled]="!myForm.form.valid">Apply</button>
+                  &nbsp;&nbsp;&nbsp;
+                  <button type="button" nbButton status="warning" (click)="onCancel(myForm)">Cancel</button>
+                </div>
+                <!-- <div class="row action-btn">
+                    <button type="submit" nbButton status="warning">Cancel</button>
+                  </div> -->
+              </div>
+            </form>
+          </div>
+        </div>   
+      </nb-card-body>
+    </nb-card>
+  </div>
+  
