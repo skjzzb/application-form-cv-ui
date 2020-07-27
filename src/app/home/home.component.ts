@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { Subscription, of } from 'rxjs';
 import { HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 @Component({
   templateUrl: './home.component.html',
@@ -103,11 +104,18 @@ apply(dataFromUI:any)
     this.uploadFiles(fileName);   
     dataFromUI.reset();
   })
+  Swal.fire(
+    'Successfully Applied!',
+    'Thank You For Applying!',
+  'success'
+    
+  )
 
 }
 
 onCancel(dataFromUI:any)
 {
+ 
   dataFromUI.reset();
   this.selectedItem = "";
   this.job_desc = null;
