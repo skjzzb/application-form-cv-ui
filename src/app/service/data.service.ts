@@ -13,7 +13,7 @@ const API_URL1 = "http://localhost:8081/v1";
 
 export class DataService {
 
-  SERVER_URL: string = " http://localhost:8080/uploadprofile";  
+  SERVER_URL: string = "https://application-form-processing.herokuapp.com/uploadprofile";  
   logindetails : any
   token : any
  
