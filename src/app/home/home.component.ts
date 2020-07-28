@@ -101,9 +101,9 @@ apply(dataFromUI:any)
       this.files.push({ data: file, inProgress: false, progress: 0});  
     }  
     this.uploadFiles(fileName);   
-    dataFromUI.reset();
+    this.onCancel(dataFromUI);
   })
-
+  
 }
 
 onCancel(dataFromUI:any)
