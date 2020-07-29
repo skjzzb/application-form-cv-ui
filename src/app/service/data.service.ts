@@ -21,8 +21,7 @@ export class DataService {
   
   }
   
-  public upload(formData) {
-
+  public upload(formData) {   
     return this.http.post<any>(this.SERVER_URL, formData, {  
         reportProgress: true,  
         observe: 'events'  

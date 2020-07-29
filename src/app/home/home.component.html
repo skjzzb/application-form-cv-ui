@@ -162,21 +162,15 @@
                   </label>
                   <br>
                   <br>
-                  <input type="file" id="fileUpload" #fileUpload name="fileUpload" accept="{{accept}}" multiple="multiple" required/>
+                  <input type="file"
+                  id="file"
+                  (change)="handleFileInput($event.target.files)">
+                  <!-- <input type="file" id="fileUpload" #fileUpload name="fileUpload" accept="{{accept}}"  /> -->
                   <div class="text-danger" style="margin-top: 7px;">[ Only PDF format is supported ]</div>
                 <!-- <button type = "button" nbButton status="primary" (click)="onClick()">
                     {{text}}  
                   </button> -->
                 </div>
-              </div>
-              <br>
-              <div class="row">
-                <!-- <input type="file" id="fileUpload" name="fileUpload" multiple="multiple" 
-                accept="{{accept}}"/> -->
-                <!-- style="display:none;" -->
-                <!-- <div class="col-md-6" ngIf="flag">
-                <nb-progress-bar [value]="file.progress" status="success">success</nb-progress-bar>
-               </div> -->
               </div>
             
               <br>

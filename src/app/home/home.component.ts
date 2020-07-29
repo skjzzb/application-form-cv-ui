@@ -23,14 +23,16 @@ export class HomeComponent implements OnInit {
   radioGroupValue = 'Self-Employed';
   candidate : any;
   model: any = {};
-
+  fileToUpload: File = null;
+  formData = new FormData();
    @Input() accept = 'application/pdf,application/msword';
 
-   @ViewChild("fileUpload", {static: false})
-    fileUpload: ElementRef;
+  //  @ViewChild("fileUpload", {static: false})
+  //   fileUpload: ElementRef;
     files  = [];  
 
-  constructor( private service: DataService ) {
+  constructor( private service: DataService ,
+                private router :Router) {
   }
 
   ngOnInit(): void {
@@ -53,6 +55,13 @@ export class HomeComponent implements OnInit {
     )
   }
 
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
+   
+    
+
+    console.log(this.fileToUpload);
+  }
 onSelect(id: number)
 {
   this.vacancyId =id;
@@ -68,7 +77,6 @@ onSelect(id: number)
 apply(dataFromUI:any)
 {
   let form = dataFromUI.form.value;
-  
 
   var today = new Date();
   var dd = String(today.getDate()).padStart(2, '0');
@@ -93,15 +101,15 @@ apply(dataFromUI:any)
   this.service.createCandidate(this.candidate,this.selectedItem).subscribe(result=>
   {
     console.log(result);
-    
-    const fileUpload = this.fileUpload.nativeElement;
-    for (let index = 0; index < fileUpload.files.length; index++)  
-    {  
-      const file = fileUpload.files[index];  
-      this.files.push({ data: file, inProgress: false, progress: 0});  
-    }  
-    this.uploadFiles(fileName);   
-    this.onCancel(dataFromUI);
+    this.formData.append('file', this.fileToUpload,fileName);
+    // this.formData.append('filename',fileName);
+    this.service.upload(this.formData).
+                subscribe((event: any) => {  
+            if (typeof (event) === 'object') {  
+              console.log(event.body);  
+            }  
+          });      
+    this.router.navigate(['']);
   })
   
 }
@@ -112,75 +120,11 @@ onCancel(dataFromUI:any)
   this.selectedItem = "";
   this.job_desc = null;
   this.job_summury = null ;
-  this.fileUpload.nativeElement.value = "";
+  // this.fileUpload.nativeElement.value = "";
 }
 
-uploadFile(file,fileName) {  
-  const formData = new FormData();  
-  formData.append('file', file.data,fileName);  
-  file.inProgress = true;  
-  this.service.upload(formData).pipe(  
-    map(event => {  
-      switch (event.type) {  
-        case HttpEventType.UploadProgress:  
-          file.progress = Math.round(event.loaded * 100 / event.total);  
-          break;  
-        case HttpEventType.Response:  
-          return event;  
-      }  
-    }),  
-    catchError((error: HttpErrorResponse) => {  
-      file.inProgress = false;  
-      return of(`${file.data.name} upload failed.`);  
-    })).subscribe((event: any) => {  
-      if (typeof (event) === 'object') {  
-        console.log(event.body);  
-      }  
-    });  
 }
 
-uploadFiles(fileName) {  
-  this.fileUpload.nativeElement.value = '';  
-  this.files.forEach(file => {  
-    this.uploadFile(file,fileName);  
-  });  
-}
 
-//   addVacancy(dataFromUI:any)
-//   {
-//     //this.ngOnInit();
-//   let vacancy=dataFromUI.form.value;
-//   //vacancy.jd=vacancy.jd.toString()
-//   console.log(vacancy);
-//    this.service.addVacancy(vacancy)
-//    .then(
-//      Response => {
-//       if (window.confirm("vacancy is added. do you want to add more record ?"))
-//       {
-//         this.selectedItem=null;
-//         //this.selectedtechnology=null;
-//         this.ClickedSubtechnology=null;
-//         dataFromUI.form.reset();
-//       }else
-//       {
-//         this.router.navigate(['/pages/vacancy/list-of-vacancy']);
-//       }
-//       //this.ngOnDestroy()
-//       //this.ngOnInit()
-//       //window.location.reload()
-//     }
-//    )
-// }
-}
-
-export class FileUploadModel {
-  data: File;
-  state: string;
-  inProgress: boolean;
-  progress: number;
-  canRetry: boolean;
-  canCancel: boolean;
-  sub?: Subscription;
-}
 
 // https://cv-processing-api.herokuapp.com/v1/candidiate/
