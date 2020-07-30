@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { Subscription, of } from 'rxjs';
 import { HttpClient, HttpEventType, HttpErrorResponse } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, map, window } from 'rxjs/operators';
 
 @Component({
   templateUrl: './home.component.html',
@@ -15,20 +15,26 @@ export class HomeComponent implements OnInit {
 
   //class variables
   selectedItem = '';
+  radioGroupValue = 'Self-Employed';
+
   vacancyId : number;
   job_desc: any;
   job_summury : any;
+
   array : any;
   filtered : any;
-  radioGroupValue = 'Self-Employed';
   candidate : any;
+
   model: any = {};
+
   fileToUpload: File = null;
   formData = new FormData();
-   @Input() accept = 'application/pdf,application/msword';
+  maxFileSize = 1048576;
 
-  //  @ViewChild("fileUpload", {static: false})
-  //   fileUpload: ElementRef;
+   @Input() accept = 'application/pdf,application/msword';
+   
+   @ViewChild("fileUpload", {static: false})
+    fileUpload: ElementRef;
     files  = [];  
 
   constructor( private service: DataService ,
@@ -57,6 +63,13 @@ export class HomeComponent implements OnInit {
 
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
+    if(this.fileToUpload != null && this.fileToUpload.size > this.maxFileSize)
+    {
+      console.log(this.fileToUpload.size);
+      alert("please choose file within 1 MB size");
+      this.fileUpload.nativeElement.value = null;
+      this.fileToUpload = null;
+    }
     console.log(this.fileToUpload);
   }
 onSelect(id: number)
@@ -118,6 +131,8 @@ onCancel(dataFromUI:any)
   this.job_desc = null;
   this.job_summury = null;
   this.formData.delete('file');
+  this.fileToUpload = null;
+  this.fileUpload.nativeElement.value = null;
 }
 
 }

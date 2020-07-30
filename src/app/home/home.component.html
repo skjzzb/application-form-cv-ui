@@ -76,7 +76,7 @@
                          fullWidth  
                          #email = "ngModel"
                          required
-                         pattern ="^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                         pattern ="^[a-z0-9A-Z._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
                          placeholder="Email"
                          [class.is-invalid]="email.invalid && email.touched" 
                          class="form-control"> 
@@ -164,9 +164,11 @@
                   <br>
                   <input type="file"
                   id="file"
-                  (change)="handleFileInput($event.target.files)">
+                  #fileUpload
+                  (change)="handleFileInput($event.target.files)" accept="{{accept}}">
                   <!-- <input type="file" id="fileUpload" #fileUpload name="fileUpload" accept="{{accept}}"  /> -->
                   <div class="text-danger" style="margin-top: 7px;">[ Only PDF format is supported ]</div>
+                  <div class="text-danger" style="margin-top: 7px;">[ Select file with size less than 1 MB]</div>
                 <!-- <button type = "button" nbButton status="primary" (click)="onClick()">
                     {{text}}  
                   </button> -->
